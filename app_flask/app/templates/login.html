@@ -1,0 +1,116 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="w-100 h-100 border border-dark d-flex" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <div id="move" class="col-3 h-25 p-0" draggable="true" ondragstart="drag(event)">
+        <div class="border border-dark bg-primary text-white" >
+            <div class="d-flex justify-content-center border-bottom border-dark my-3">
+                <h5 class="">Acceso</h5>
+            </div>
+            <form method="POST" class="d-flex justify-content-center flex-column">
+                <div class="form-group row mx-0 d-flex justify-content-center justify-content-md-between">
+                    {{form.username.label(class="col-sm-2 col-form-label col-form-label")}}
+                    {% if form.username.errors %}
+                    {{ form.username(class="form-control is-invalid")}}
+                    <div class="invalid_feedback">
+                        {%for error in form.username.errors%}
+                        <span> {{error}} </span>
+                        {%endfor%}
+                    </div>
+                    {% else %}
+                    <div class="col-sm-8 flex-fill">
+                        {{ form.username(class="form-control pr-0") }}
+                    </div>
+                    {%endif%}
+                </div>
+                <div class="form-group row mx-0 d-flex justify-content-around justify-content-md-between">
+                    {{form.password.label(class="col-sm-2 col-form-label col-form-label")}}
+
+                    {% if form.password.errors %}
+                    {{ form.password(class="form-control is-invalid")}}
+                    <div class="invalid_feedback">
+                        {%for error in form.password.errors%}
+                        <span> {{error}} </span>
+                        {%endfor%}
+                    </div>
+                    {% else %}
+                    <div class="col-sm-8 flex-fill">
+                        {{ form.password(class="form-control px-1") }}
+                    </div>
+                    {%endif%}
+                </div>
+                <div class="form-group d-flex justify-content-center">
+                    {{ form.submit(class="btn btn-outline-light ") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+
+<script>
+    if (sessionStorage.getItem('styleElement') != null) {
+        let form = document.querySelector('#move');
+        let lsstyle = JSON.parse(sessionStorage.getItem('styleElement'))
+
+        form.style.top = lsstyle.top
+        form.style.left = lsstyle.left
+        form.style.position = lsstyle.position
+    }
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+    function drag(ev) {
+
+        ev.dataTransfer.setData('text', ev.target.id);
+        let initialRC = JSON.stringify({'x':ev.offsetX,'y':ev.offsetY})
+        ev.dataTransfer.setData('initialRC', initialRC);
+        
+    }
+
+    function drop(ev) {
+        ev.preventDefault();
+        let data = ev.dataTransfer.getData('text')
+        let initialRC = JSON.parse(ev.dataTransfer.getData('initialRC'))
+        let elementoGetted = document.getElementById(data)
+        console.log(elementoGetted.children[0].clientHeight)
+        console.log(ev)
+
+        let locationY =  ev.offsetY - initialRC.y
+        let locationX =  ev.offsetX - initialRC.x
+
+        console.log(locationY)
+        console.log(locationX)
+        let heightEl = elementoGetted.children[0].clientHeight
+        let widthEl = elementoGetted.getBoundingClientRect().width
+
+
+        elementoGetted.style.setProperty('position', 'relative')
+        if(locationY<0){
+            locationY=0
+        }
+        if(locationY+heightEl>ev.target.clientHeight){
+            console.log('confirm')
+            locationY = ev.target.clientHeight - heightEl
+        }
+        if(locationX<0){
+            locationX=0
+        }
+        if(locationX+widthEl>ev.target.clientWidth){
+            locationX = ev.target.clientWidth - widthEl
+        }
+        elementoGetted.style.setProperty('top', locationY + 'px')
+        elementoGetted.style.setProperty('left', locationX + 'px')
+
+        let stEl = window.getComputedStyle(elementoGetted)
+        sessionStorage.setItem('element', elementoGetted.innerHTML)
+        sessionStorage.setItem('styleElement', JSON.stringify(elementoGetted.style))
+
+        ev.target.appendChild(elementoGetted)
+    }
+
+</script>
+
+{% endblock script %}

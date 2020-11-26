@@ -1,0 +1,115 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="w-100 h-100 border border-dark d-flex" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <div id="move" class="col-3 h-25 p-0" draggable="true" ondragstart="drag(event)">
+        <div class="border border-dark bg-primary text-white" >
+            <div class="d-flex justify-content-center border-bottom border-dark my-3">
+                <h5 class="">Registrar Usuario</h5>
+            </div>
+            <form method="POST" class="d-flex justify-content-center flex-column">
+                <div class="form-group row mx-0 d-flex justify-content-center justify-content-md-between">
+                    {{form.username.label(class="col-sm-2 col-form-label col-form-label")}}
+                    {% if form.username.errors %}
+                    {{ form.username(class="form-control is-invalid")}}
+                    <div class="invalid_feedback">
+                        {%for error in form.username.errors%}
+                        <span> {{error}} </span>
+                        {%endfor%}
+                    </div>
+                    {% else %}
+                    <div class="col-sm-8 flex-fill">
+                        {{ form.username(class="form-control pr-0") }}
+                    </div>
+                    {%endif%}
+                </div>
+                <div class="form-group row mx-0 d-flex justify-content-around justify-content-md-between">
+                    {{form.first_name.label(class="col-sm-2 col-form-label col-form-label")}}
+
+                    {% if form.first_name.errors %}
+                    {{ form.first_name(class="form-control is-invalid")}}
+                    <div class="invalid_feedback">
+                        {%for error in form.first_name.errors%}
+                        <span> {{error}} </span>
+                        {%endfor%}
+                    </div>
+                    {% else %}
+                    <div class="col-sm-8 flex-fill">
+                        {{ form.first_name(class="form-control px-1") }}
+                    </div>
+                    {%endif%}
+                </div>
+                <div class="form-group row mx-0 d-flex justify-content-around justify-content-md-between">
+                    {{form.last_name.label(class="col-sm-2 col-form-label col-form-label")}}
+
+                    {% if form.last_name.errors %}
+                    {{ form.last_name(class="form-control is-invalid")}}
+                    <div class="invalid_feedback">
+                        {%for error in form.last_name.errors%}
+                        <span> {{error}} </span>
+                        {%endfor%}
+                    </div>
+                    {% else %}
+                    <div class="col-sm-8 flex-fill">
+                        {{ form.last_name(class="form-control px-1") }}
+                    </div>
+                    {%endif%}
+                </div>
+
+                <div class="form-group row mx-0 d-flex justify-content-around justify-content-md-between">
+                    {{form.roles.label(class="col-sm-2 col-form-label col-form-label")}}
+
+                    {% if form.roles.errors %}
+                    {{ form.roles(class="form-control is-invalid")}}
+                    <div class="invalid_feedback">
+                        {%for error in form.roles.errors%}
+                        <span> {{error}} </span>
+                        {%endfor%}
+                    </div>
+                    {% else %}
+                    <div class="col-sm-8 flex-fill">
+                        {{ form.roles(class="form-control px-1") }}
+                    </div>
+                    {%endif%}
+                </div>
+                <div class="form-group row mx-0 d-flex justify-content-around justify-content-md-between">
+                    {{form.password.label(class="col-sm-2 col-form-label col-form-label")}}
+
+                    {% if form.password.errors %}
+                    {{ form.password(class="form-control is-invalid")}}
+                    <div class="invalid_feedback">
+                        {%for error in form.password.errors%}
+                        <span> {{error}} </span>
+                        {%endfor%}
+                    </div>
+                    {% else %}
+                    <div class="col-sm-8 flex-fill">
+                        {{ form.password(class="form-control px-1") }}
+                    </div>
+                    {%endif%}
+                </div>
+                <div class="form-group row mx-0 d-flex justify-content-around justify-content-md-between">
+                    {{form.confirm_password.label(class="col-sm-2 col-form-label col-form-label")}}
+
+                    {% if form.confirm_password.errors %}
+                    {{ form.confirm_password(class="form-control is-invalid")}}
+                    <div class="invalid_feedback">
+                        {%for error in form.confirm_password.errors%}
+                        <span> {{error}} </span>
+                        {%endfor%}
+                    </div>
+                    {% else %}
+                    <div class="col-sm-8 flex-fill">
+                        {{ form.confirm_password(class="form-control px-1") }}
+                    </div>
+                    {%endif%}
+                </div>
+                <div class="form-group d-flex justify-content-center">
+                    {{ form.submit(class="btn btn-outline-light ") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
