@@ -2,7 +2,7 @@ from app_flask.app.security.mixin import AuditMixin
 from app_flask.app import manager_login
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
-
+from sqlalchemy_serializer import SerializerMixin
 
 db = SQLAlchemy()
 
@@ -10,8 +10,11 @@ db = SQLAlchemy()
 def load_user(user_id):
     return Usuario.query.get(user_id)
 
-class Permiso(db.Model, AuditMixin):
+class Permiso(db.Model, AuditMixin, SerializerMixin):
     __tablename__ = 'permiso'
+
+    serialize_only =('id','nombre','descripcion')
+
     id = db.Column(db.Integer, db.Sequence('permiso_id_seq'), primary_key=True)
     nombre = db.Column(db.String(100), unique=True,nullable=False)
     descripcion = db.Column(db.String(256), nullable=True)
@@ -29,8 +32,10 @@ assoc_premiso_rol = db.Table(
     db.UniqueConstraint('permiso_id', 'rol_id')
 )
 
-class Rol(db.Model, AuditMixin):
+class Rol(db.Model, AuditMixin, SerializerMixin):
     __tablename__ =  'rol'
+
+    serialize_only =('id','nombre','descripcion','permisos')
 
     id = db.Column(db.Integer, db.Sequence('rol_id_seq'), primary_key=True)
     nombre = db.Column(db.String(50), unique= True, nullable=False)
@@ -50,8 +55,12 @@ assoc_usuario_rol = db.Table(
     db.UniqueConstraint('usuario_id', 'rol_id')
 )
 
-class Usuario(db.Model, UserMixin, AuditMixin):
+class Usuario(db.Model, UserMixin, AuditMixin, SerializerMixin):
     __tablename__ = 'usuario'
+
+    serialize_only =('id','username','first_name','last_name','roles')
+
+    serialize_rules = ('-password')
 
     id = db.Column(db.Integer, db.Sequence('usuario_id_seq'), primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)

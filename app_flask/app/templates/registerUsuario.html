@@ -7,6 +7,8 @@
                 <h5 class="">Registrar Usuario</h5>
             </div>
             <form method="POST" class="d-flex justify-content-center flex-column">
+            {{ form.hidden_tag()}}
+
                 <div class="form-group row mx-0 d-flex justify-content-center justify-content-md-between">
                     {{form.username.label(class="col-sm-2 col-form-label col-form-label")}}
                     {% if form.username.errors %}

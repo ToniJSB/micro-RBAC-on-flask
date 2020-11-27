@@ -22,10 +22,12 @@ def create_app():
 
     from .main.routes import main
     from .login.routes import auth
-    from .security.routes import create
+    from .security.routes import create, view, update
 
     app.register_blueprint(main)
     app.register_blueprint(auth)
     app.register_blueprint(create)
+    app.register_blueprint(view)
+    app.register_blueprint(update)
 
     return app
