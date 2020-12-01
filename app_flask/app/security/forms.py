@@ -7,7 +7,6 @@ from wtforms.validators import DataRequired, EqualTo, ValidationError
 
 
 class RegisterPermisoForm(FlaskForm):
-
     nombre = StringField('nombre',validators=[DataRequired()])
     descripcion = StringField('descripcion',validators=[DataRequired()])
     submit = SubmitField('Submit')
@@ -15,7 +14,6 @@ class RegisterPermisoForm(FlaskForm):
 
 
 class RegisterRolForm(FlaskForm):
-
     nombre = StringField('nombre',validators=[DataRequired()])
     descripcion = StringField('descripcion',validators=[DataRequired()])
     permisos = QuerySelectMultipleField('permisos',validators=[DataRequired()],
@@ -29,8 +27,8 @@ class UpdateUsuarioForm(FlaskForm):
     username = StringField('Username',validators=[DataRequired()])
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
-    password = PasswordField('Password',validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password',validators=[DataRequired(), EqualTo('password')])
+    password = PasswordField('Password')
+    confirm_password = PasswordField('Confirm Password',validators=[ EqualTo('password')])
 
     roles = QuerySelectMultipleField('roles',validators=[DataRequired()],
         query_factory= lambda : Rol.query.all(),
@@ -38,6 +36,7 @@ class UpdateUsuarioForm(FlaskForm):
         get_label=lambda a: a.nombre )
 
     submit = SubmitField('Submit')
+    
 class RegisterUsuarioForm(FlaskForm):
     username = StringField('Username',validators=[DataRequired()])
     first_name = StringField('First Name', validators=[DataRequired()])
@@ -45,7 +44,7 @@ class RegisterUsuarioForm(FlaskForm):
     password = PasswordField('Password',validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password',validators=[DataRequired(), EqualTo('password')])
 
-    roles = QuerySelectMultipleField('roles',validators=[DataRequired()],
+    roles = QuerySelectMultipleField('roles',
         query_factory= lambda : Rol.query.all(),
         get_pk=lambda a: a.id,
         get_label=lambda a: a.nombre )

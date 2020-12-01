@@ -33,7 +33,7 @@
             <tr>
                 {% for atributo in attr %}
                     {% if atributo == 'buttons'%}
-                    <th scope="col"></th>                
+                    <th scope="col"><a href="{{url_for('create.c_'+title)}}">Create a new {{title}}</a></th>                
                     {%else%}
                     <th scope="col">{{atributo}}</th>
                     {%endif%}    
@@ -43,11 +43,18 @@
                 <tr>
                 {% for atributo in attr %}
                     {% if atributo == 'buttons'%}
-                        <th scope="col">
-                            <a href="{{url_for('update.u_'+title, id=item.id)}}">
-                                <button class="btn btn-light" type="button">Modificar</button>
+                        <th scope="col d-flex justify-content-center flex-row">
+                            <a href="{{url_for('update.u_'+title, id=item.id)}}" >
+                                <button class="btn btn-light col-3" type="button">Modificar</button>
                             </a>
-                        </th>                
+
+                            <a href="{{url_for('delete.d_'+title, id=item.id)}}">
+                                <button class="btn btn-light col-3" type="button">Delete</button>
+                            </a>
+                            <a href="{{url_for('show.s_'+title, id=item.id)}}">
+                                <button class="btn btn-light col-3" type="button">Show</button>
+                            </a>
+                        </th>
                     {%else%}
                         <td>{{item[atributo]}}</td>
                     {%endif%}
