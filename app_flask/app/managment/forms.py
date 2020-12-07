@@ -1,6 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields.core import SelectField
-from app_flask.app.security.models import db,Usuario, Rol, Permiso
+from app_flask.app.managment.models import Permiso, Rol, Usuario
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.validators import DataRequired, EqualTo, ValidationError
@@ -16,7 +15,7 @@ class RegisterPermisoForm(FlaskForm):
 class RegisterRolForm(FlaskForm):
     nombre = StringField('nombre',validators=[DataRequired()])
     descripcion = StringField('descripcion',validators=[DataRequired()])
-    permisos = QuerySelectMultipleField('permisos',validators=[DataRequired()],
+    permisos = QuerySelectMultipleField('permisos',
         query_factory= lambda : Permiso.query.all(),
         get_pk= lambda a: a.id,
         get_label= lambda a: a.nombre )
@@ -30,7 +29,7 @@ class UpdateUsuarioForm(FlaskForm):
     password = PasswordField('Password')
     confirm_password = PasswordField('Confirm Password',validators=[ EqualTo('password')])
 
-    roles = QuerySelectMultipleField('roles',validators=[DataRequired()],
+    roles = QuerySelectMultipleField('roles',
         query_factory= lambda : Rol.query.all(),
         get_pk=lambda a: a.id,
         get_label=lambda a: a.nombre )

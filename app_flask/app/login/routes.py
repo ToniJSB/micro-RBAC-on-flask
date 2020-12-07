@@ -1,10 +1,9 @@
-
 from flask import Blueprint,url_for,render_template, redirect, g
 from flask.globals import request
 from flask_login import login_user, login_required
 from flask.helpers import flash
 from .forms import LoginForm
-from app_flask.app.security.models import Usuario
+from app_flask.app.managment.models import Usuario
 from app_flask.app import bcrypt
 
 auth = Blueprint('auth',__name__)

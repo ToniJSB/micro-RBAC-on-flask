@@ -10,7 +10,7 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand navbar-light bg-light">
+    <nav class="navbar navbar-expand navbar-dark bg-primary">
         <a href="#" class="navbar-brand">Back Office</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
@@ -22,7 +22,7 @@
                     <a href="{{url_for('auth.login')}}" class="nav-link">login</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{url_for('create.c_usuario')}}" class="nav-link">Register</a>
+                    <a href="{{url_for('managment.c_usuario')}}" class="nav-link">Register</a>
                 </li>
                 {%else%}
                 
@@ -31,16 +31,16 @@
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">Maintenance</a>
                     
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu bg-primary">
 
                             <li class="dropdown-item">
-                                <a href="{{url_for('view.v_permiso')}}" class="nav-link">Crear Permiso</a>
+                                <a href="{{url_for('managment.v_permiso')}}" class="nav-link">Crear Permiso</a>
                             </li>
                             <li class="dropdown-item">
-                                <a href="{{url_for('view.v_rol')}}" class="nav-link">Crear Rol</a>
+                                <a href="{{url_for('managment.v_rol')}}" class="nav-link">Crear Rol</a>
                             </li>
                             <li class="dropdown-item">
-                                <a href="{{url_for('view.v_usuario')}}" class="nav-link">Crear Usuario</a>
+                                <a href="{{url_for('managment.v_usuario')}}" class="nav-link">Crear Usuario</a>
                             </li>
                         </ul>
                     

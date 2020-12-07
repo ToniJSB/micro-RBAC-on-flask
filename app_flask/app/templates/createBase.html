@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="w-100 h-100 border border-dark d-flex" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <div id="move" class="col-3 h-25 p-0" draggable="true" ondragstart="drag(event)">
+        <div class="card border border-dark" >
+            <div class="card-header bg-primary border-bottom border-dark d-flex justify-content-center text-white">
+                <h5 class="">{{title}}</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" class="d-flex justify-content-center flex-column">
+                    {{form.hidden_tag()}}
+                    {% for input in constructor.items()%}
+                        {% set attribute = input[0] %}
+                        {%if input[0] == 'submit'%}
+                            <div class="form-group d-flex justify-content-center">
+                                {{ form.__getattribute__(attribute)(class="btn btn-outline-primary ") }}
+                            </div>
+                        {%else%}
+                            <div class="form-group row">
+                                {{form.__getattribute__(attribute).label(class="col-sm-5 col-form-label")}}
+                                {% if form.__getattribute__(attribute).errors %}
+                                <div class="invalid_feedback">
+                                    {% for error in form.__getattribute__(attribute).errors%}
+                                    <span>{{error}}</span>
+                                    {%endfor%}
+                                </div>
+                                {%else%}
+                                <div class="col-sm-7">
+                                    {{form.__getattribute__(attribute)(class="form-control pr-0")}}
+                                </div>
+                                {%endif%}
+                                
+                            </div>
+                        {%endif%}
+                    {%endfor%}
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

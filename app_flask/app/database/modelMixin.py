@@ -60,7 +60,6 @@ class AuditMixin(object):
     @classmethod
     def get_user_id(self):
         try:
-            print(current_user.id)
             return current_user.id
         except Exception:
             return None

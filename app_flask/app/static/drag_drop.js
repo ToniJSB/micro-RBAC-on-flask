@@ -50,7 +50,7 @@ function drop(ev) {
     }
     elementoGetted.style.setProperty('top', locationY + 'px')
     elementoGetted.style.setProperty('left', locationX + 'px')
-
+    
     let stEl = window.getComputedStyle(elementoGetted)
     sessionStorage.setItem('element', elementoGetted.innerHTML)
     sessionStorage.setItem('styleElement', JSON.stringify(elementoGetted.style))

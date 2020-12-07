@@ -1,14 +1,7 @@
-from app_flask.app.security.mixin import AuditMixin
-from app_flask.app import manager_login
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from app_flask.app.database import db
+from app_flask.app.database.modelMixin import AuditMixin
 from sqlalchemy_serializer import SerializerMixin
-
-db = SQLAlchemy()
-
-@manager_login.user_loader
-def load_user(user_id):
-    return Usuario.query.get(user_id)
 
 class Permiso(db.Model, AuditMixin, SerializerMixin):
     __tablename__ = 'permiso'
@@ -20,8 +13,7 @@ class Permiso(db.Model, AuditMixin, SerializerMixin):
     descripcion = db.Column(db.String(256), nullable=True)
 
     def __repr__(self):
-        return u"{0}, {1}".format(self.id,self.nombre)
-
+        return self.nombre
 
 assoc_premiso_rol = db.Table(
     'permiso_rol',
@@ -67,7 +59,7 @@ class Usuario(db.Model, UserMixin, AuditMixin, SerializerMixin):
     first_name = db.Column(db.String(120), nullable=False)
     last_name = db.Column(db.String(120), nullable=False)
     password = db.Column(db.String(256), nullable=False)
-    roles = db.relationship('Rol',secondary=assoc_usuario_rol,backref=db.backref('usuario',lazy=True))
+    roles = db.relationship('Rol',secondary= 'usuario_rol',backref=db.backref('usuario',lazy=True))
 
     def get_id(self):
         return self.id

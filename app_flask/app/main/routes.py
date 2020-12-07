@@ -1,9 +1,9 @@
-from flask import Blueprint,url_for,render_template, redirect
-from flask.helpers import flash
-from app_flask.app.security.models import db, Usuario
-from app_flask.app import bcrypt 
-main = Blueprint('main',__name__)
+from flask import render_template
+
+from app_flask.app.database.utils import  load_user
+from app_flask.app.database import  create_db
+
  
-@main.route('/',methods=['GET'])
 def home():
+    load_user
     return render_template('index.html')
