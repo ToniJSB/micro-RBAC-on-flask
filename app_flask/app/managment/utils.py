@@ -1,6 +1,18 @@
 
 
 def getattrs_from_form(form):
+    """
+    Coge los atributos del modelo que están en el formulario
+
+    Parametro
+    -
+    FlasKForm
+
+    Return
+    -
+    dict
+    
+    """
     form_constructor = dict()
     for atr in form.__dict__.items():
         if atr[0] == 'meta':

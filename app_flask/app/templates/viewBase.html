@@ -9,13 +9,13 @@
         {%if to_val != ''%}
         <div class="container d-flex flex-row">
             
-            <p class=""> Estas seguro de querer borrar {{to_val}} con {{dep}} ?</p> <a href="{{url_for('managment.d_'+title, id=to_val.id ,auth = sure )}}"><button>Delete</button></a>
+            <p class=""> {{_('Estas seguro de querer borrar {} con dep ?'.format(to_val))}}</p> <a href="{{url_for('managment.d_'+title, id=to_val.id ,auth = sure )}}"><button>Delete</button></a>
         </div>
         {%endif%}
     </div>
     <div id="filters">
         <div class="card card-body">
-            <form id="filter_form" method="GET">
+            <form id="filter_form" method="POST">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                         Añade un filtro
@@ -23,14 +23,24 @@
                     </button>
                     <ul class="dropdown-menu">
                         {% for atributo in attr%}
+                            {% if atributo == 'buttons' %}
+
+                            {%else%}
                             <li>
-                                <a href="javascript:void(0)" name="{{atributo}}" class="filter" onclick="return false;">
-                                    {{atributo}}
+                                <a href="javascript:void(0)" name="{{atributo}}" class="filtro" onclick="return false;">
+                                    {{_(atributo)}}
                                 </a>
                             </li>
+                            {%endif%}
                         {%endfor%}
                     </ul>
                 </div>
+                <table class="table table-responsive d-flex  filtros">
+
+                </table>
+                <button type="submit" id="filtra" class="btn btn-sm btn-primary">{{_("Search")}}
+                    <i class="fa fa-search"></i>
+                </button>
             </form>
         </div>
     </div>
@@ -76,3 +86,7 @@
 </div>
 
 {%endblock content%}
+
+{%block scripts%}
+<script src="{{url_for('static',filename='filters.js')}}"></script>
+{%endblock scripts%}

@@ -4,11 +4,12 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-def create_db():
-    from app_flask.app.managment.models import Permiso, Rol, Usuario
-    db.create_all()
 
 def remove_extra_attr(obj):
+    """
+    Elimina los atributos del modelo SQLAlchemy que no deseemos
+    """
+    
     if 'password' in obj.__dict__ :
         obj.__dict__.pop('password')
     obj.__dict__.pop('_sa_instance_state')

@@ -33,8 +33,18 @@ def get_permiso_by_id(id:int):
     return Permiso.query.filter(Permiso.id == id).first()
 
 def get_permiso_by_nombre(nombre:str):
-    print('g_P_bNombre')
     return Permiso.query.filter(Permiso.nombre == nombre).first()
+
+def get_permisos_by_descripcion_equals(descripcion:str):
+    return Permiso.query.filter(Permiso.descripcion == descripcion)
+    
+def get_permisos_by_descripcion_not_equals(descripcion:str):
+    return Permiso.query.filter(Permiso.descripcion != descripcion)
+
+def get_permisos_by_descripcion_contains(descripcion:str):
+    return Permiso.query.filter(Permiso.descripcion.ilike(descripcion))
+
+
 
 def generate_permiso(perm:Permiso):
     db.session.add(perm)

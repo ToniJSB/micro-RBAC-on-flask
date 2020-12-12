@@ -1,3 +1,4 @@
+import datetime
 from flask_login import UserMixin
 from app_flask.app.database import db
 from app_flask.app.database.modelMixin import AuditMixin
@@ -59,7 +60,8 @@ class Usuario(db.Model, UserMixin, AuditMixin, SerializerMixin):
     first_name = db.Column(db.String(120), nullable=False)
     last_name = db.Column(db.String(120), nullable=False)
     password = db.Column(db.String(256), nullable=False)
-    roles = db.relationship('Rol',secondary= 'usuario_rol',backref=db.backref('usuario',lazy=True))
+    discharged = db.Column(db.DateTime)
+    roles = db.relationship('Rol',secondary= 'usuario_rol',backref=db.backref('usuario',lazy=True, cascade='all, delete'))
 
     def get_id(self):
         return self.id

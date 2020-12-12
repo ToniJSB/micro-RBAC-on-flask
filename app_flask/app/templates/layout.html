@@ -15,32 +15,29 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a href="{{url_for('main.home')}}" class="nav-link">Home</a>
+                    <a href="{{url_for('main.home')}}" class="nav-link">{{_('Inicio')}}</a>
                 </li>
                 {% if not current_user.is_authenticated %}
                 <li class="nav-item">
-                    <a href="{{url_for('auth.login')}}" class="nav-link">login</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url_for('managment.c_usuario')}}" class="nav-link">Register</a>
+                    <a href="{{url_for('auth.login')}}" class="nav-link">{{_('Contectate')}}</a>
                 </li>
                 {%else%}
                 
                 {%endif%}
 
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">Maintenance</a>
+                    <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">{{_('Mantenimiento')}}</a>
                     
                         <ul class="dropdown-menu bg-primary">
 
                             <li class="dropdown-item">
-                                <a href="{{url_for('managment.v_permiso')}}" class="nav-link">Crear Permiso</a>
+                                <a href="{{url_for('managment.v_permiso')}}" class="nav-link">{{_('Ver Permisos')}}</a>
                             </li>
                             <li class="dropdown-item">
-                                <a href="{{url_for('managment.v_rol')}}" class="nav-link">Crear Rol</a>
+                                <a href="{{url_for('managment.v_rol')}}" class="nav-link">{{_('Ver Rol')}} </a>
                             </li>
                             <li class="dropdown-item">
-                                <a href="{{url_for('managment.v_usuario')}}" class="nav-link">Crear Usuario</a>
+                                <a href="{{url_for('managment.v_usuario')}}" class="nav-link">{{_('Ver Usuario')}}</a>
                             </li>
                         </ul>
                     
@@ -72,6 +69,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="{{url_for('static',filename='drag_drop.js')}}"></script>
-
+    {%block scripts%}
+    {%endblock scripts%}
 </body>
 </html>
