@@ -1,3 +1,4 @@
+from app_flask.app.database import remove_extra_attr
 from app_flask.app.database.daoPermiso import get_all_permisos
 from app_flask.app.database.daoRol import get_all_roles
 from app_flask.app.database.daoUsuario import *
@@ -7,7 +8,21 @@ def find_all_usuarios():
     """
     Solicita a la capa de persistencia todos los usuarios
     """
-    return get_all_usuarios()
+    usuarios = []
+    attr = []
+    for usuario in get_all_usuarios():
+        remove_extra_attr(usuario)
+        if attr == []:
+            attr = list(usuario.__dict__.keys())
+            attr.append('buttons')
+
+        usuarios.append(usuario.__dict__)
+    obj = {
+        'attr': attr,
+        'lista':usuarios
+    }
+
+    return obj
 
 def create_usuario(form):
     """

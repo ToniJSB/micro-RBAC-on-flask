@@ -6,21 +6,25 @@ def get_all_roles():
     return Rol.query.all()
 
 def get_rol_by_id(id:int):
-    return Rol.query.filter(Rol.id == id).first()
+    return Rol.query.filter(Rol.id == id)
 
 def get_rol_by_nombre(nombre):
-    return Rol.query.filter(Rol.nombre == nombre).first()
+    return Rol.query.filter(Rol.nombre == nombre)
+
+def get_rol_by_descripcion_equals(descripcion:str):
+    return Rol.query.filter(Rol.descripcion == descripcion)
+
+def get_rol_by_descripcion_not_equals(descripcion:str):
+    return Rol.query.filter(Rol.descripcion != descripcion)
+
+def get_rol_by_descripcion_contains(descripcion:str):
+    return Rol.query.filter(Rol.descripcion.contains(descripcion))
 
 def generate_rol(rol:Rol):
     db.session.add(rol)
     db.session.commit()
 
-def update_rol(id,form):
-    rolG = get_rol_by_id(id)
-    rolG.nombre = form.nombre.data
-    rolG.descripcion = form.descripcion.data
-    rolG.permisos = form.permisos.data
-    
+def update_rol(rol):
     db.session.commit()
 
 def delete_rol(rol):

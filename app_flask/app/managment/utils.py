@@ -23,8 +23,6 @@ def getattrs_from_form(form):
             continue
         elif atr[0] == '_csrf':
             continue
-        elif atr[0] == 'csrf_token':
-            continue
         else:
             form_constructor[atr[0]] = atr[1]
     return form_constructor

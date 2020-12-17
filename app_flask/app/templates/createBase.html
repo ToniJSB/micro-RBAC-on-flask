@@ -11,10 +11,54 @@
                     {{form.hidden_tag()}}
                     {% for input in constructor.items()%}
                         {% set attribute = input[0] %}
-                        {%if input[0] == 'submit'%}
+
+                        {%if attribute == 'submit'%}
                             <div class="form-group d-flex justify-content-center">
                                 {{ form.__getattribute__(attribute)(class="btn btn-outline-primary ") }}
                             </div>
+                        {% elif attribute == 'csrf_token' %}
+                            {{form.csrf_token}}
+                        {% elif attribute == 'permisos' %}
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                Launch demo modal
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content d-flex flex-wrap">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                      <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body flex-column justify-content-left">
+                                        
+                                        <ul id="permisos">
+
+                                            {%for listaPerm in form.__getattribute__(attribute)%}
+                                                <li>
+                                                    {%set laid = listaPerm.data | int %}
+                                                    {%set ns = namespace(checkeado=false)%}
+                                                    {% for id in ids %} 
+                                                    
+                                                        {% if laid == id %}
+                                                            {% set ns.checkeado = True%}
+                                                        {%endif%}
+                                                    {%endfor%}
+                                                    {% if ns.checkeado == True %}
+                                                        {{listaPerm.label}}{{listaPerm(checked="True")}}
+                                                    {%else%}
+                                                        {{listaPerm.label}}{{listaPerm}}
+                                                    {%endif%}
+                                                </li>
+                                            {%endfor%}
+                                        </ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>   
                         {%else%}
                             <div class="form-group row">
                                 {{form.__getattribute__(attribute).label(class="col-sm-5 col-form-label")}}
@@ -41,3 +85,16 @@
 </div>
 
 {% endblock content %}
+
+{%block scripts%}
+    <script>
+        let selectores = document.querySelectorAll('.nice')
+        selectores.forEach(option =>{
+            option.addEventListener('click',ev => {
+                console.log('ey')
+                console.log(ev)
+                ev.target.selected = 'selected'
+            })
+        })
+    </script>
+{%endblock scripts%}

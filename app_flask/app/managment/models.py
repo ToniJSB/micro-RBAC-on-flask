@@ -34,7 +34,8 @@ class Rol(db.Model, AuditMixin, SerializerMixin):
     nombre = db.Column(db.String(50), unique= True, nullable=False)
     descripcion = db.Column(db.String(256), nullable=True)
     permisos = db.relationship(
-        'Permiso', secondary= assoc_premiso_rol, backref=db.backref('rol',lazy=True)
+        'Permiso', secondary= assoc_premiso_rol,
+        backref=db.backref('rol',lazy=False)
     )
     def __repr__(self):
         return self.nombre
@@ -61,7 +62,7 @@ class Usuario(db.Model, UserMixin, AuditMixin, SerializerMixin):
     last_name = db.Column(db.String(120), nullable=False)
     password = db.Column(db.String(256), nullable=False)
     discharged = db.Column(db.DateTime)
-    roles = db.relationship('Rol',secondary= 'usuario_rol',backref=db.backref('usuario',lazy=True, cascade='all, delete'))
+    roles = db.relationship('Rol',secondary= 'usuario_rol',backref=db.backref('usuario',lazy=False))
 
     def get_id(self):
         return self.id

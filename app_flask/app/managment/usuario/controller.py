@@ -15,10 +15,6 @@ def v_usuario():
     Fabrica una vista para ver los usuarios.
     """
     usuarios = find_all_usuarios()
-    user=usuarios[0]
-    remove_extra_attr(user)    
-    user.buttons = ''    
-    attr = list(user.__dict__.keys())
 
     sure = False
     dep = ''
@@ -33,9 +29,9 @@ def v_usuario():
     # Funciona cuando solicitco un delete _ Es para la autorización del borrado
 
     if sure == 'True':
-        return render_template('viewBase.html',attr=attr,obj=usuarios,title='usuario',transTitle=_l('usuario'),sure=sure,dep=dep,to_val=to_val)
+        return render_template('viewBase.html',obj=usuarios,title='usuario',transTitle=_l('usuario'),sure=sure,dep=dep,to_val=to_val)
     
-    return render_template('viewBase.html',attr=attr,obj=usuarios,title='usuario',transTitle=_l('usuario'),dep = dep , to_val=to_val)
+    return render_template('viewBase.html',obj=usuarios,title='usuario',transTitle=_l('usuario'),dep = dep , to_val=to_val)
 
 @login_required
 def c_usuario():
@@ -47,6 +43,7 @@ def c_usuario():
     form_constructor = getattrs_from_form(form)
 
     if form.validate_on_submit():
+        print(form.__dict__.get('roles'))
         user = create_usuario(form)
         flash(_l('Cuenta creada para ')+ user.username + '!', 'success')
         return redirect(url_for('managment.v_usuario'))

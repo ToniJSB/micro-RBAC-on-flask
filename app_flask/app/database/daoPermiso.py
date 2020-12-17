@@ -30,10 +30,10 @@ def filter_permisos_by_descripcion_desc():
     return Permiso.query.order_by(Permiso.descripcion.desc()) 
 
 def get_permiso_by_id(id:int):
-    return Permiso.query.filter(Permiso.id == id).first()
+    return Permiso.query.filter(Permiso.id == id)
 
 def get_permiso_by_nombre(nombre:str):
-    return Permiso.query.filter(Permiso.nombre == nombre).first()
+    return Permiso.query.filter(Permiso.nombre == nombre)
 
 def get_permisos_by_descripcion_equals(descripcion:str):
     return Permiso.query.filter(Permiso.descripcion == descripcion)
@@ -42,7 +42,7 @@ def get_permisos_by_descripcion_not_equals(descripcion:str):
     return Permiso.query.filter(Permiso.descripcion != descripcion)
 
 def get_permisos_by_descripcion_contains(descripcion:str):
-    return Permiso.query.filter(Permiso.descripcion.ilike(descripcion))
+    return Permiso.query.filter(Permiso.descripcion.contains(descripcion))
 
 
 
@@ -50,10 +50,7 @@ def generate_permiso(perm:Permiso):
     db.session.add(perm)
     db.session.commit()
 
-def update_permiso(id, form):
-    permisoG = get_permiso_by_id(id)
-    permisoG.nombre = form.nombre.data
-    permisoG.descripcion = form.descripcion.data
+def update_permiso(perm):
     db.session.commit()
 
 def delete_permiso(perm):
