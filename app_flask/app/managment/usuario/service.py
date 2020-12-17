@@ -41,7 +41,7 @@ def create_usuario(form):
     -
     FlaskForm
     """
-    rolesId = form.roles.raw_data
+    rolesId = form.list_options.raw_data
     roles = []
     for rol in rolesId:
         roles.append(get_rol_by_id(int(rol))[0])
@@ -52,7 +52,7 @@ def create_usuario(form):
     return user
 
 def modify_usuario(id,form):
-    rolesId = form.roles.raw_data
+    rolesId = form.list_options.raw_data
     roles = []
     for rol in rolesId:
         roles.append(get_rol_by_id(int(rol))[0])

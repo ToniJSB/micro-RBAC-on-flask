@@ -42,9 +42,7 @@ def c_usuario():
     """
     form = RegisterUsuarioForm()
     form_constructor = getattrs_from_form(form)
-
     if form.validate_on_submit():
-        print(form.__dict__.get('roles'))
         user = create_usuario(form)
         flash(_l('Cuenta creada para ')+ user.username + '!', 'success')
         return redirect(url_for('managment.v_usuario'))

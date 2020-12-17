@@ -39,8 +39,7 @@ def create_rol(form):
     -
     FlaskForm
     """
-    permisosId = form.permisos.raw_data
-    print(form.permisos._get_object_list())
+    permisosId = form.list_options.raw_data
     permisos = []
     for perm in permisosId:
         permisos.append(get_permiso_by_id(int(perm))[0])
@@ -50,8 +49,8 @@ def create_rol(form):
     return rol
 
 def modify_rol(id,form):
-    permisosId = form.permisos.raw_data
-    print(form.permisos._get_object_list())
+    permisosId = form.list_options.raw_data
+    
     permisos = []
     for perm in permisosId:
         permisos.append(get_permiso_by_id(int(perm))[0])

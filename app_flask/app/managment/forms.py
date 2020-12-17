@@ -48,17 +48,12 @@ class RegisterRolForm(FlaskForm):
     nombre = StringField(_l('Nombre'),validators=[DataRequired()])
     descripcion = StringField(_l('Descripcion'),validators=[DataRequired()])
     
-    permisos = CustomField(query_factory=lambda : Permiso.query.all(),
+    list_options = CustomField(_l('permisos'),
+        query_factory=lambda : Permiso.query.all(),
         get_pk= lambda a: a.id,
         get_label= lambda a: a.nombre
     )
-    #permiso = FieldList(FormField(PermisosRolForm),default= lambda : Permiso.query.all())
-    #permisos = FieldList(StringField('perm',render_kw={'readonly':True}),default= lambda : Permiso.query.all())
-    #permiso = QuerySelectField(_l('permisos'),
-    #    query_factory= lambda : Permiso.query.all(),
-    #    get_pk= lambda a: a.id,
-    #    get_label= lambda a: a.nombre,
-    #    widget=ListWidget() )
+
     submit = SubmitField(_l('Enviar'))
 
 
@@ -91,7 +86,7 @@ class UpdateUsuarioForm(FlaskForm):
     password = PasswordField(_l('Contraseña'))
     confirm_password = PasswordField(_l('Confirmar Contraseña'),validators=[ EqualTo('password')])
 
-    roles = QuerySelectMultipleField(_l('roles'),
+    list_options = CustomField(_l('roles'),
         query_factory= lambda : Rol.query.all(),
         get_pk=lambda a: a.id,
         get_label=lambda a: a.nombre )
@@ -134,7 +129,7 @@ class RegisterUsuarioForm(FlaskForm):
     password = PasswordField(_l('Contraseña'),validators=[DataRequired()])
     confirm_password = PasswordField(_l('Confirmar Contraseña'),validators=[DataRequired(), EqualTo('password')])
 
-    roles = QuerySelectMultipleField(_l('roles'),
+    list_options = CustomField(_l('roles'),
         query_factory= lambda : Rol.query.all(),
         get_pk=lambda a: a.id,
         get_label=lambda a: a.nombre )
