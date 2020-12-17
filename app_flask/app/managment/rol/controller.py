@@ -67,7 +67,7 @@ def u_rol(id):
         return redirect(url_for('managment.v_rol'))
 
     elif request.method == 'GET':
-        rolG = find_roles_by('id','equal',id)[0]
+        rolG = find_rol_by_id(id)[0]
         form.nombre.data = rolG.nombre 
         form.descripcion.data = rolG.descripcion 
         permisosid = []
@@ -115,11 +115,10 @@ def f_rol():
     if request.method == 'POST':
         data_filter = dict(request.get_json())
         for filter in data_filter.values():
-            print(filter)
+
             for rol in find_roles_by(filter['attr'],filter['simil'],filter['text']):
                 remove_extra_attr(rol)
                 rol.__dict__.pop('usuario')
-                print(rol.__dict__)
 
                 roles_n['lista'].append(rol.__dict__)
 

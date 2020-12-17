@@ -8,11 +8,11 @@ def find_all_roles():
     Solicita a la capa de persistencia todos los roles
     """
     roles = []
-    usuarios = []
     attr = []
     for rol in get_all_roles():
         rol.__dict__.pop('usuario')
         remove_extra_attr(rol)
+        
         if attr == []:
             
             attr = list(rol.__dict__.keys())

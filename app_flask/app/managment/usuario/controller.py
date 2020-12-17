@@ -1,4 +1,5 @@
 from flask import flash,redirect,render_template,url_for,request
+from flask.json import dumps
 from flask_login import login_required
 from flask_babel import lazy_gettext as _l
 from app_flask.app import manager_login, bcrypt
@@ -23,7 +24,7 @@ def v_usuario():
         if args == 'sure':
             sure = request.args.get(args)
         elif args == 'obj':
-            to_val = find_usuario_by_username(request.args.get(args))
+            to_val = find_usuario_by_username(request.args.get(args))[0]
         else:
             dep = request.args.get(args)
     # Funciona cuando solicitco un delete _ Es para la autorización del borrado
@@ -59,26 +60,22 @@ def u_usuario(id):
     """
     form = UpdateUsuarioForm()
     form_constructor = getattrs_from_form(form)
-    usuarioG = get_usuario_by_id(id)
     
     if form.validate_on_submit():
-        usuarioG.username = form.username.data
-        usuarioG.first_name = form.first_name.data
-        usuarioG.last_name = form.last_name.data
-        usuarioG.roles = form.roles.data
-        if form.password.data != '' and form.confirm_password.data != '' and form.confirm_password.data == form.password.data :
-            usuarioG.password = bcrypt.generate_password_hash(form.password.data)
-        update_usuario()
+        modify_usuario(id,form)
         flash(_l('el usuario ha sido modificado'),'success')
         return redirect(url_for('managment.v_usuario'))
 
     elif request.method == 'GET':
+        usuarioG = find_usuario_by_id(id)[0]
         form.username.data = usuarioG.username 
         form.first_name.data = usuarioG.first_name 
         form.last_name.data = usuarioG.last_name
-        form.roles.data = usuarioG.roles
+        rolesId = []
+        for rol in usuarioG.roles:
+            rolesId.append(rol.id)
     
-    return render_template('createBase.html', form=form,constructor=form_constructor)
+    return render_template('createBase.html', form=form,constructor=form_constructor, ids=rolesId)
 
 
 @login_required
@@ -94,7 +91,7 @@ def d_usuario(id,auth):
         confirm_delete_usuario(id)
 
     elif auth_delete_usuario(id):
-        return redirect(url_for('managment.v_usuario',sure=True,dep='roles', obj=get_usuario_by_id(id)))
+        return redirect(url_for('managment.v_usuario',sure=True,dep='roles', obj=find_usuario_by_id(id)[0]))
 
     return redirect(url_for('managment.v_usuario'))
 
@@ -105,10 +102,27 @@ def s_usuario(id):
     Fabrica una vista para mostrar el permiso
     pasado por parámetro con su id
     """
-    usuario = get_usuario_by_id(id)
-    print(usuario.roles)
+    usuario = find_usuario_by_id(id)[0]
+    
     remove_extra_attr(usuario)
     user = list(usuario.__dict__.items())
     user.sort(reverse=True)
     
     return render_template('showBase.html',title='usuario',transTitle=_l('usuario'),obj=user)
+
+@login_required
+def f_usuario():
+    lista = []
+    if request.method == 'POST':
+        data_filter = dict(request.get_json())
+        
+        for filter in data_filter.values():
+            for usuario in find_usuarios_by(filter['attr'],filter['simil'],filter['text']):
+                
+                remove_extra_attr(usuario)
+                # usuario.__dict__.pop('usuario')
+
+                lista.append(usuario.__dict__)
+    usuarios_n = find_all_usuarios(lista)
+    
+    return dumps(usuarios_n)
