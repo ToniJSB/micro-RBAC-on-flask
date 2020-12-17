@@ -33,9 +33,9 @@
                                         
                                         <ul id="permisos">
 
-                                            {%for listaPerm in form.__getattribute__(attribute)%}
+                                            {%for fieldList in form.__getattribute__(attribute)%}
                                                 <li>
-                                                    {%set laid = listaPerm.data | int %}
+                                                    {%set laid = fieldList.data | int %}
                                                     {%set ns = namespace(checkeado=false)%}
                                                     {% for id in ids %} 
                                                     
@@ -44,9 +44,9 @@
                                                         {%endif%}
                                                     {%endfor%}
                                                     {% if ns.checkeado == True %}
-                                                        {{listaPerm.label}}{{listaPerm(checked="True")}}
+                                                        {{fieldList.label}}{{fieldList(checked="True")}}
                                                     {%else%}
-                                                        {{listaPerm.label}}{{listaPerm}}
+                                                        {{fieldList.label}}{{fieldList}}
                                                     {%endif%}
                                                 </li>
                                             {%endfor%}
