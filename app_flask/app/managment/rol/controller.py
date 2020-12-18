@@ -1,8 +1,8 @@
 from flask import flash, redirect, render_template, url_for,request
+from flask.json import dumps
 from flask_login import login_required
 from flask_babel import lazy_gettext as _l
 from app_flask.app.database import remove_extra_attr
-from app_flask.app.managment.models import Rol
 from app_flask.app.managment.rol.service import *
 from app_flask.app.managment.forms import RegisterRolForm
 from app_flask.app.managment.utils import getattrs_from_form
@@ -14,15 +14,10 @@ def v_rol():
     Requiere de autentificación
     Fabrica una vista para ver los rol.
     """
-    roles = get_all_roles()
-    if len(roles) == 0:
+    roles = find_all_roles()
+    if len(roles['lista']) == 0:
         return redirect(url_for('managment.c_rol'))
     
-    rol = roles[0]
-    remove_extra_attr(rol)
-    rol.buttons = ''
-    attr=list(rol.__dict__.keys())
-
     sure = False
     dep = ''
     to_val = ''
@@ -35,9 +30,9 @@ def v_rol():
             dep = request.args.get(args)
     # Funciona cuando solicito un delete _ Es para la autorización del borrado 
     if sure == 'True':
-        return render_template('viewBase.html',attr=attr,obj=roles,title='rol',transTitle=_l('rol'),sure=sure,dep=dep,to_val=to_val)
+        return render_template('viewBase.html',obj=roles,title='rol',transTitle=_l('rol'),sure=sure,dep=dep,to_val=to_val)
     
-    return render_template('viewBase.html',attr=attr,obj=roles,title='rol',transTitle=_l('rol'),dep = dep , to_val=to_val)
+    return render_template('viewBase.html',obj=roles,title='rol',transTitle=_l('rol'),dep = dep , to_val=to_val)
 
 
 @login_required
@@ -48,11 +43,11 @@ def c_rol():
     """
     form = RegisterRolForm()
     form_constructor = getattrs_from_form(form)
+
     if form.validate_on_submit():
-        print(form.permisos)
-        """ rol = Rol(nombre=form.nombre.data,descripcion=form.descripcion.data,permisos=form.permisos.data)"""
+
         rol = create_rol(form)
-        flash(_l('rol created: ')+rol.nombre+'!','success')
+        flash(_l('rol creado: ')+rol.nombre+'!','success')
         return redirect(url_for('managment.v_rol'))
     return render_template('createBase.html', form=form, constructor=form_constructor,title='rol',transTitle=_l('rol'))
 
@@ -67,17 +62,19 @@ def u_rol(id):
     form_constructor = getattrs_from_form(form)
 
     if form.validate_on_submit():
-        update_rol(id, form)
+        modify_rol(id, form)
         flash(_l('el rol ha sido modificado'),'success')
         return redirect(url_for('managment.v_rol'))
 
     elif request.method == 'GET':
-        rolG = get_rol_by_id(id)
+        rolG = find_rol_by_id(id)[0]
         form.nombre.data = rolG.nombre 
         form.descripcion.data = rolG.descripcion 
-        form.permisos.data = rolG.permisos
-    
-    return render_template('createBase.html', form=form, constructor=form_constructor)
+        permisosid = []
+        for perm in rolG.permisos:
+            permisosid.append(perm.id)
+        
+    return render_template('createBase.html', form=form, constructor=form_constructor, ids = permisosid)
 
 @login_required
 def d_rol(id,auth):
@@ -103,8 +100,26 @@ def s_rol(id):
     Fabrica una vista para mostrar el rol
     pasado por parámetro con su id
     """
-    role = get_rol_by_id(id)
+    role = find_roles_by('id','equal',id)[0]
+    role.permisos
+    role.__dict__.pop('usuario')
     remove_extra_attr(role)
     rol = list(role.__dict__.items())
     rol.sort(reverse=True)
     return render_template('showBase.html',title='rol',transTitle=_l('rol'),obj=rol)
+
+@login_required
+def f_rol():
+    roles_n = find_all_roles()
+    roles_n['lista'].clear()
+    if request.method == 'POST':
+        data_filter = dict(request.get_json())
+        for filter in data_filter.values():
+
+            for rol in find_roles_by(filter['attr'],filter['simil'],filter['text']):
+                remove_extra_attr(rol)
+                rol.__dict__.pop('usuario')
+
+                roles_n['lista'].append(rol.__dict__)
+
+    return dumps(roles_n)

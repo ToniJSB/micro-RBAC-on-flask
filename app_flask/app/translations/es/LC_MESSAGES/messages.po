@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-12-09 08:51+0100\n"
-"PO-Revision-Date: 2020-12-09 08:51+0100\n"
+"POT-Creation-Date: 2020-12-15 08:58+0100\n"
+"PO-Revision-Date: 2020-12-15 08:54+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
 "Language-Team: es <LL@li.org>\n"
@@ -18,134 +18,142 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.0\n"
 
-#: app/login/forms.py:7 app/managment/forms.py:27 app/managment/forms.py:41
-msgid "Username"
-msgstr ""
+#: app/login/forms.py:7 app/managment/forms.py:92 app/managment/forms.py:135
+msgid "Nombre de usuario"
+msgstr "Nombre de Usuario"
 
-#: app/login/forms.py:8 app/managment/forms.py:30 app/managment/forms.py:44
-msgid "Password"
-msgstr ""
+#: app/login/forms.py:8 app/managment/forms.py:95 app/managment/forms.py:138
+msgid "Contraseña"
+msgstr "Contraseña"
 
-#: app/login/forms.py:9 app/managment/forms.py:12 app/managment/forms.py:23
-#: app/managment/forms.py:38 app/managment/forms.py:52
-msgid "Submit"
-msgstr ""
+#: app/login/forms.py:9 app/managment/forms.py:66 app/managment/forms.py:103
+#: app/managment/forms.py:146
+msgid "Enviar"
+msgstr "Enviar"
 
-#: app/login/routes.py:20
+#: app/login/routes.py:18
 msgid "usted está autorizado"
-msgstr ""
+msgstr "usted está autorizado"
 
-#: app/login/routes.py:24
+#: app/login/routes.py:22
 msgid "usted no está autorizado"
-msgstr ""
+msgstr "usted no está autorizado"
 
-#: app/managment/forms.py:10 app/managment/forms.py:17
+#: app/managment/forms.py:38
 msgid "nombre"
-msgstr ""
+msgstr "nombre"
 
-#: app/managment/forms.py:11 app/managment/forms.py:18
+#: app/managment/forms.py:39
 msgid "descripcion"
-msgstr ""
+msgstr "descripcion"
 
-#: app/managment/forms.py:19
+#: app/managment/forms.py:40
+msgid "Submit"
+msgstr "Submit"
+
+#: app/managment/forms.py:59 app/managment/forms.py:93
+#: app/managment/forms.py:136
+msgid "Nombre"
+msgstr "Nombre"
+
+#: app/managment/forms.py:60
+msgid "Descripcion"
+msgstr "Descripcion"
+
+#: app/managment/forms.py:62
 msgid "permisos"
-msgstr ""
+msgstr "permisos"
 
-#: app/managment/forms.py:28 app/managment/forms.py:42
-msgid "First Name"
-msgstr ""
+#: app/managment/forms.py:94 app/managment/forms.py:137
+msgid "Apellidos"
+msgstr "Apellidos"
 
-#: app/managment/forms.py:29 app/managment/forms.py:43
-msgid "Last Name"
-msgstr ""
+#: app/managment/forms.py:96 app/managment/forms.py:139
+msgid "Confirmar Contraseña"
+msgstr "Confirmar Contraseña"
 
-#: app/managment/forms.py:31 app/managment/forms.py:45
-msgid "Confirm Password"
-msgstr ""
-
-#: app/managment/forms.py:31 app/managment/forms.py:45
-msgid "password"
-msgstr ""
-
-#: app/managment/forms.py:33 app/managment/forms.py:47
+#: app/managment/forms.py:98 app/managment/forms.py:141
 msgid "roles"
-msgstr ""
+msgstr "roles"
 
-#: app/managment/forms.py:57
-msgid "this username is taken. You must choose a different one"
-msgstr ""
+#: app/managment/forms.py:151
+msgid "Este usuario está en uso. Tendrás el elegir otro"
+msgstr "Este usuario está en uso. Tendrás el elegir otro"
 
-#: app/managment/permiso/controller.py:31
-#: app/managment/permiso/controller.py:33
-#: app/managment/permiso/controller.py:45
-#: app/managment/permiso/controller.py:80
-msgid "Permiso"
-msgstr ""
-
-#: app/managment/permiso/controller.py:43
-msgid "permiso creado: "
-msgstr ""
-
+#: app/managment/permiso/controller.py:34
+#: app/managment/permiso/controller.py:36
 #: app/managment/permiso/controller.py:52
-msgid "el permiso ha sido modificado"
-msgstr ""
+#: app/managment/permiso/controller.py:106
+msgid "Permiso"
+msgstr "Permiso"
 
-#: app/managment/rol/controller.py:35 app/managment/rol/controller.py:37
-#: app/managment/rol/controller.py:50 app/managment/rol/controller.py:85
+#: app/managment/permiso/controller.py:50
+msgid "permiso creado: "
+msgstr "permiso creado: "
+
+#: app/managment/permiso/controller.py:66
+msgid "el permiso ha sido modificado"
+msgstr "el permiso ha sido modificado"
+
+#: app/managment/rol/controller.py:33 app/managment/rol/controller.py:35
+#: app/managment/rol/controller.py:50 app/managment/rol/controller.py:103
 msgid "rol"
-msgstr ""
+msgstr "rol"
 
 #: app/managment/rol/controller.py:48
-msgid "rol created: "
+msgid "rol creado: "
 msgstr ""
 
-#: app/managment/rol/controller.py:57
+#: app/managment/rol/controller.py:64
 msgid "el rol ha sido modificado"
-msgstr ""
+msgstr "el rol ha sido modificado"
 
-#: app/managment/usuario/controller.py:17
-msgid "Cuenta creada para "
-msgstr ""
-
-#: app/managment/usuario/controller.py:43
-#: app/managment/usuario/controller.py:45
-#: app/managment/usuario/controller.py:91
+#: app/managment/usuario/controller.py:32
+#: app/managment/usuario/controller.py:34
+#: app/managment/usuario/controller.py:113
 msgid "usuario"
-msgstr ""
+msgstr "usuario"
 
-#: app/managment/usuario/controller.py:60
+#: app/managment/usuario/controller.py:47
+msgid "Cuenta creada para "
+msgstr "Cuenta creada para "
+
+#: app/managment/usuario/controller.py:71
 msgid "el usuario ha sido modificado"
-msgstr ""
+msgstr "el usuario ha sido modificado"
 
 #: app/templates/index.html:4 app/templates/index.html:6
 msgid "bienvenido"
-msgstr ""
+msgstr "bienvenido"
 
 #: app/templates/layout.html:18
 msgid "Inicio"
-msgstr ""
+msgstr "Inicio"
 
 #: app/templates/layout.html:22
 msgid "Contectate"
-msgstr ""
+msgstr "Contectate"
 
-#: app/templates/layout.html:25
-msgid "Registrate"
-msgstr ""
-
-#: app/templates/layout.html:32
+#: app/templates/layout.html:29
 msgid "Mantenimiento"
-msgstr ""
+msgstr "Mantenimiento"
+
+#: app/templates/layout.html:34
+msgid "Ver Permisos"
+msgstr "Ver Permisos"
 
 #: app/templates/layout.html:37
-msgid "Ver Permisos"
-msgstr ""
+msgid "Ver Rol"
+msgstr "Ver Rol"
 
 #: app/templates/layout.html:40
-msgid "Ver Rol"
-msgstr ""
-
-#: app/templates/layout.html:43
 msgid "Ver Usuario"
-msgstr ""
+msgstr "Ver Usuario"
+
+#: app/templates/viewBase.html:31
+msgid "Buscar"
+msgstr "Buscar"
+
+#~ msgid "password"
+#~ msgstr ""
 

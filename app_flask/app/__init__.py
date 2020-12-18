@@ -1,4 +1,4 @@
-import os
+from app_flask.app.config import Config
 from flask import Flask, current_app, request
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
@@ -11,20 +11,15 @@ babel = Babel()
 def create_app():
     """ Genera una instancia de la aplicación """
     app = Flask(__name__)
-
-
-    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-
-    app.config['DEBUG'] = True
-    app.config['ENV'] = 'development'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///modelodb.db'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config.from_object(Config)
     
     from app_flask.app.database import db
 
     db.init_app(app)
+    bcrypt.init_app(app)
     manager_login.init_app(app)
     babel.init_app(app)
+
     from app_flask.app.main import main
     from app_flask.app.login import auth
     from app_flask.app.managment import managment

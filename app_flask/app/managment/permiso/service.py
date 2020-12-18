@@ -1,12 +1,27 @@
 from app_flask.app.database.daoPermiso import *
 from app_flask.app.managment.models import Permiso
+from app_flask.app.database import remove_extra_attr
 
 
 def find_all_permisos():
     """
     Solicita a la capa de persistencia todos los permisos
     """
-    return get_all_permisos()
+    permisos = []
+    attr = []
+    for permiso in get_all_permisos():
+        permiso.__dict__.pop('rol')
+        remove_extra_attr(permiso)
+        if attr == []:
+            attr = list(permiso.__dict__.keys())
+            attr.append('buttons')
+            
+        permisos.append(permiso.__dict__)
+    obj = {
+        'attr': attr,
+        'lista':permisos 
+    }
+    return obj
 
 def create_permiso(form):
     """
@@ -20,6 +35,13 @@ def create_permiso(form):
     generate_permiso(permiso)
     return permiso
 
+def modify_permiso(id,form):
+    permisoG = get_permiso_by_id(id)[0]
+    
+    permisoG.nombre = form.nombre.data
+    permisoG.descripcion = form.descripcion.data
+    update_permiso(permisoG)
+    pass
 
 def find_permisos_by(attr,simil,text):
     """
@@ -30,7 +52,8 @@ def find_permisos_by(attr,simil,text):
     -
     :param:`attr:` el atributo por el que queremos buscar\n
     :param:`simil:` el tipo de filtrado que deseamos.\n
-        \tP.E: EQUAL,NOT_EQUAL,CONTAINS
+        \tP.E: EQUAL,NOTEQUAL,CONTAINS
+    :param:`text:` el texto por el que queremos filtrar
     """
     if attr == 'id' or attr == 'nombre':
         if attr == 'nombre':
@@ -54,5 +77,5 @@ def confirm_delete_permiso(id):
     Recibe por parámetro la id del permiso a borrar
     """
     permiso = get_permiso_by_id(id)
-    delete_permiso(permiso)
+    delete_permiso(permiso[0])
     pass

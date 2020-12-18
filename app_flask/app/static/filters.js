@@ -1,12 +1,12 @@
 
 const rootElement = document.querySelector('#filter_form')
 const container = document.querySelector('.filtros')
-var select = document.querySelectorAll('.filtro')
 let tbody = document.createElement('tbody')
 tbody.className = 'w-100'
 container.appendChild(tbody)
 
-function addFiltro(ev){
+export function addFiltro(ev){
+    console.log('admin')
     let attr = ev.target.name
     let module = document.createElement('tr')
     
@@ -64,42 +64,38 @@ function addFiltro(ev){
     });
     tbody.appendChild(module)
 }
-select.forEach(element => {
-    element.addEventListener('click',addFiltro)
-});
 
-document.querySelector('#filtra').addEventListener('click',function(){
+
+export async function filtralo(){
     let filterBy = document.querySelectorAll('.searchBy')
     let filterConditions = document.querySelectorAll('.searchCond')
     let filterText = document.querySelectorAll('.searchTxt')
     
     let objReq = {}
     for (let i = 0; i < filterBy.length; i++) {
-        condicionIndex = filterConditions[i].selectedIndex
-        condicionOption = filterConditions[i].options
+        let condicionIndex = filterConditions[i].selectedIndex
+        let condicionOption = filterConditions[i].options
 
         let busqueda = {
             'attr': filterBy[i].textContent.slice(2),
             'simil': condicionOption[condicionIndex].value,
             'text':filterText[i].value
-        }
-        
-        
-        
+        }        
         objReq['filter_'+i] = busqueda
     }
-    let url= location.pathname
+    console.log(objReq)
+    let url= location.pathname+'/filtered'
     
     
-    let envio = fetch(url,{
+    let envio = await fetch(url,{
         method:'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        redirect:"manual",
         body:JSON.stringify(objReq)
     }).then(e => {
-//        return e.json()
+        return e.json()
     })
-    
-})
+    console.log(await envio)
+    return await envio
+}
