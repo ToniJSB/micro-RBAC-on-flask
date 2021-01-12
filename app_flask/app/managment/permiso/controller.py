@@ -1,4 +1,4 @@
-from flask import flash, redirect, render_template, url_for,request, current_app
+from flask import flash, redirect, render_template, url_for,request, current_app, jsonify
 from flask.json import dumps
 from flask_login import login_required
 from flask_babel import lazy_gettext as _l
@@ -7,7 +7,7 @@ from app_flask.app.managment.permiso.service import *
 from app_flask.app.managment.forms import RegisterPermisoForm
 from app_flask.app.managment.utils import getattrs_from_form, get_languages
 
-@login_required
+
 def v_permiso():
     """
     Requiere de autentificación
@@ -31,9 +31,9 @@ def v_permiso():
     # Funciona cuando solicito un delete _ Es para la autorización del borrado
 
     if sure == 'True':
-        return render_template('viewBase.html',obj=permisos,title='permiso', transTitle=_l('Permiso'),sure=sure,dep=dep,to_val=to_val[0], lang= get_languages())
+        return jsonify(permisos)
     
-    return render_template('viewBase.html',obj=permisos, title='permiso', transTitle=_l('Permiso'),dep = dep , to_val=to_val, lang= get_languages())
+    return jsonify(permisos)
     
 
 @login_required

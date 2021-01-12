@@ -3,10 +3,12 @@ from flask import Flask, current_app, request
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_babel import Babel
+from flask_cors import CORS
 
 manager_login = LoginManager()
 bcrypt = Bcrypt()
 babel = Babel()
+cors = CORS()
 
 def create_app(test_config=None):
     """ Genera una instancia de la aplicación """
@@ -26,6 +28,7 @@ def create_app(test_config=None):
     bcrypt.init_app(app)
     manager_login.init_app(app)
     babel.init_app(app)
+    cors.init_app(app)
 
 
     from app_flask.app.main import main
