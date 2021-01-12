@@ -1,5 +1,4 @@
 from getpass import getpass
-from os import name
 import click
 from flask.cli import with_appcontext
 from app_flask.app import current_app,bcrypt

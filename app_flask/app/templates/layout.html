@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/flags/flags16.css')}}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Document</title>
@@ -22,7 +23,9 @@
                     <a href="{{url_for('auth.login')}}" class="nav-link">{{_('Contectate')}}</a>
                 </li>
                 {%else%}
-                
+                <li class="nav-item">
+                    <a href="{{url_for('auth.logout')}}" class="nav-link">{{_('Descontectate')}}</a>
+                </li>
                 {%endif%}
 
                 <li class="nav-item dropdown">
@@ -45,6 +48,26 @@
 
             </ul>
         </div>
+        <ul class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+              <div class="f16"><i class="flag {{lang.locale.get('flag')}}"></i><b class="caret"></b>
+              </div>
+            </a>
+            <ul class="dropdown-menu">
+                {% for idioma in lang.languages %}
+                    <li class="dropdown">
+                        {% if idioma != lang.locale %}
+                            <a tabindex="-1" href="">
+                                <div class="f16"><i class="flag {{lang.languages[idioma].get('flag')}}"></i> - {{lang.languages[idioma].get('name')}}
+                                </div>
+                            </a>
+                        {%else%}
+                        <h3> {{idioma}}</h3>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </ul>
 
     </nav>
 

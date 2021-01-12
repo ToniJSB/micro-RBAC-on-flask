@@ -1,4 +1,4 @@
-
+from flask import current_app
 
 def getattrs_from_form(form):
     """
@@ -26,3 +26,13 @@ def getattrs_from_form(form):
         else:
             form_constructor[atr[0]] = atr[1]
     return form_constructor
+
+def get_languages():
+    languages = current_app.config['LANGUAGES']
+    locale = languages[current_app.config['BABEL_DEFAULT_LOCALE']]
+
+    lang = {
+        "languages": languages,
+        "locale": locale
+    }
+    return lang

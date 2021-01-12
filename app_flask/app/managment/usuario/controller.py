@@ -7,7 +7,7 @@ from app_flask.app.database import remove_extra_attr
 from app_flask.app.managment.models import Usuario
 from app_flask.app.managment.forms import RegisterUsuarioForm, UpdateUsuarioForm
 from app_flask.app.managment.usuario.service import *
-from app_flask.app.managment.utils import getattrs_from_form
+from app_flask.app.managment.utils import getattrs_from_form, get_languages
 
 @login_required
 def v_usuario():
@@ -30,9 +30,9 @@ def v_usuario():
     # Funciona cuando solicitco un delete _ Es para la autorización del borrado
 
     if sure == 'True':
-        return render_template('viewBase.html',obj=usuarios,title='usuario',transTitle=_l('usuario'),sure=sure,dep=dep,to_val=to_val)
+        return render_template('viewBase.html',obj=usuarios,title='usuario',transTitle=_l('usuario'),sure=sure,dep=dep,to_val=to_val, lang = get_languages())
     
-    return render_template('viewBase.html',obj=usuarios,title='usuario',transTitle=_l('usuario'),dep = dep , to_val=to_val)
+    return render_template('viewBase.html',obj=usuarios,title='usuario',transTitle=_l('usuario'),dep = dep , to_val=to_val, lang = get_languages())
 
 @login_required
 def c_usuario():
@@ -47,7 +47,7 @@ def c_usuario():
         flash(_l('Cuenta creada para ')+ user.username + '!', 'success')
         return redirect(url_for('managment.v_usuario'))
 
-    return render_template('createBase.html', form=form,constructor=form_constructor,title='usuario')
+    return render_template('createBase.html', form=form,constructor=form_constructor,title='usuario',lang = get_languages())
 
 @login_required
 def u_usuario(id):
@@ -73,7 +73,7 @@ def u_usuario(id):
         for rol in usuarioG.roles:
             rolesId.append(rol.id)
     
-    return render_template('createBase.html', form=form,constructor=form_constructor, ids=rolesId)
+    return render_template('createBase.html', form=form,constructor=form_constructor, ids=rolesId, lang= get_languages())
 
 
 @login_required
@@ -106,7 +106,7 @@ def s_usuario(id):
     user = list(usuario.__dict__.items())
     user.sort(reverse=True)
     
-    return render_template('showBase.html',title='usuario',transTitle=_l('usuario'),obj=user)
+    return render_template('showBase.html',title='usuario',transTitle=_l('usuario'),obj=user, lang= get_languages())
 
 @login_required
 def f_usuario():

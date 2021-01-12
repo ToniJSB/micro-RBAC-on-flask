@@ -3,6 +3,7 @@ from flask_login import UserMixin
 from app_flask.app.database import db
 from app_flask.app.database.modelMixin import AuditMixin
 from sqlalchemy_serializer import SerializerMixin
+from flask_babel import lazy_gettext
 
 class Permiso(db.Model, AuditMixin, SerializerMixin):
     __tablename__ = 'permiso'
@@ -12,6 +13,8 @@ class Permiso(db.Model, AuditMixin, SerializerMixin):
     id = db.Column(db.Integer, db.Sequence('permiso_id_seq'), primary_key=True)
     nombre = db.Column(db.String(100), unique=True,nullable=False)
     descripcion = db.Column(db.String(256), nullable=True)
+
+
 
     def __repr__(self):
         return self.nombre

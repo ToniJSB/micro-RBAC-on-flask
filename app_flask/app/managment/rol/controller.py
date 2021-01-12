@@ -5,7 +5,7 @@ from flask_babel import lazy_gettext as _l
 from app_flask.app.database import remove_extra_attr
 from app_flask.app.managment.rol.service import *
 from app_flask.app.managment.forms import RegisterRolForm
-from app_flask.app.managment.utils import getattrs_from_form
+from app_flask.app.managment.utils import getattrs_from_form, get_languages
 
 
 @login_required
@@ -30,9 +30,9 @@ def v_rol():
             dep = request.args.get(args)
     # Funciona cuando solicito un delete _ Es para la autorización del borrado 
     if sure == 'True':
-        return render_template('viewBase.html',obj=roles,title='rol',transTitle=_l('rol'),sure=sure,dep=dep,to_val=to_val)
+        return render_template('viewBase.html',obj=roles,title='rol',transTitle=_l('rol'),sure=sure,dep=dep,to_val=to_val, lang= get_languages())
     
-    return render_template('viewBase.html',obj=roles,title='rol',transTitle=_l('rol'),dep = dep , to_val=to_val)
+    return render_template('viewBase.html',obj=roles,title='rol',transTitle=_l('rol'),dep = dep , to_val=to_val, lang= get_languages())
 
 
 @login_required
@@ -49,7 +49,7 @@ def c_rol():
         rol = create_rol(form)
         flash(_l('rol creado: ')+rol.nombre+'!','success')
         return redirect(url_for('managment.v_rol'))
-    return render_template('createBase.html', form=form, constructor=form_constructor,title='rol',transTitle=_l('rol'))
+    return render_template('createBase.html', form=form, constructor=form_constructor,title='rol',transTitle=_l('rol'), lang= get_languages())
 
 @login_required
 def u_rol(id):
@@ -74,7 +74,7 @@ def u_rol(id):
         for perm in rolG.permisos:
             permisosid.append(perm.id)
         
-    return render_template('createBase.html', form=form, constructor=form_constructor, ids = permisosid)
+    return render_template('createBase.html', form=form, constructor=form_constructor, ids = permisosid, lang= get_languages())
 
 @login_required
 def d_rol(id,auth):
@@ -106,7 +106,7 @@ def s_rol(id):
     remove_extra_attr(role)
     rol = list(role.__dict__.items())
     rol.sort(reverse=True)
-    return render_template('showBase.html',title='rol',transTitle=_l('rol'),obj=rol)
+    return render_template('showBase.html',title='rol',transTitle=_l('rol'),obj=rol, lang= get_languages())
 
 @login_required
 def f_rol():

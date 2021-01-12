@@ -1,5 +1,7 @@
+import os
 from flask_sqlalchemy import SQLAlchemy
-
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
 db = SQLAlchemy()
 
